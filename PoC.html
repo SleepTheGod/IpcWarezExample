@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Embed & IPC Simulation</title>
+    <style>
+        body {
+            background-color: #2d2d2d;
+            color: #f2f2f2;
+            font-family: "Courier New", monospace;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        iframe {
+            border: 2px solid #f0f0f0;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .button {
+            background-color: #444;
+            border: 1px solid #555;
+            color: #f2f2f2;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #555;
+            border-color: #666;
+        }
+
+        .console {
+            background-color: #000;
+            color: #0f0;
+            padding: 20px;
+            border: 1px solid #444;
+            font-family: "Courier New", monospace;
+            width: 80%;
+            margin: 20px auto;
+            height: 150px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Malware Simulation: Advanced IPC and Content Embedding</h1>
+
+    <!-- Embed content from a safe, educational source -->
+    <iframe src="trusted_content.html" width="550" height="400"></iframe>
+
+    <button class="button" onclick="triggerMaliciousSimulation()">Simulate Malicious Action</button>
+
+    <div class="console" id="consoleOutput">
+        Loading console output...
+    </div>
+
+    <script>
+        // Simulate IPC communication with advanced logging and potential malicious behavior
+        function sendIPCMessage(ipc, actionType, data) {
+            const message = {
+                actionType: actionType,
+                key: "general.homepage",
+                value: data
+            };
+            ipc.send("dispatch-action", JSON.stringify(message));
+            logConsoleOutput(`IPC message sent on channel "dispatch-action": ${JSON.stringify(message)}`);
+        }
+
+        // Simulate the malicious action and log output
+        function triggerMaliciousSimulation() {
+            const ipc = {
+                send: function(channel, message) {
+                    // In a real-world scenario, this might execute harmful payloads (for educational purposes only)
+                    console.log(`Simulated IPC message on channel ${channel}: ${message}`);
+                }
+            };
+
+            const maliciousUrl = "http://attacker.example.com/";
+            sendIPCMessage(ipc, "app-change-setting", maliciousUrl);
+        }
+
+        // Log messages to the console
+        function logConsoleOutput(message) {
+            const consoleElement = document.getElementById('consoleOutput');
+            consoleElement.textContent += `${message}\n`;
+            consoleElement.scrollTop = consoleElement.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Add realistic delayed simulation behavior for educational purposes
+        setTimeout(() => {
+            logConsoleOutput("Malicious action simulated. Check IPC behavior.");
+        }, 3000);
+    </script>
+</body>
+</html>
